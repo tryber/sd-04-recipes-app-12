@@ -1,16 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
-import { Login, Main, Details } from './pages';
+import Login from './pages/Login';
+import MainRecipes from './pages/ MainRecipes/index';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/:type" component={Main} />
-      <Route path="/:type/:id" component={Details} />
-    </Switch>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route
+          exact
+          path="/comidas"
+          render={(props) => <MainRecipes props={props} type="meal" />}
+        />
+        <Route path="/:type/:id" component={Login} />
+      </Switch>
+    </Router>
   );
 }
 
