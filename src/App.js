@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
 import { Login, Main, Details } from './pages';
 
 function App() {
