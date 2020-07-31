@@ -6,15 +6,7 @@ export const getRecipeAreas = (type) => fetch(`https://www.the${type}db.com/api/
   .then((response) => response.json()
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
 
-export const getRecipeIngredients = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/list.php?i=list`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
-
-export const searchRecipesByName = (meal, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?s=${meal}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
-
-export const searchRecipesByFirstLetter = (letter, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?f=${letter}`)
+export const getIngredientsList = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/list.php?i=list`)
   .then((response) => response.json()
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
 
@@ -34,6 +26,22 @@ export const searchRecipesByArea = (area) => fetch(`https://www.themealdb.com/ap
   .then((response) => response.json()
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
 
-export const searchRecipesByMainIngredients = (ingredients, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/filter.php?i=${ingredients}`)
+const searchByIngredients = (ingredients, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/filter.php?i=${ingredients}`)
   .then((response) => response.json()
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+
+const searchByName = (meal, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?s=${meal}`)
+  .then((response) => response.json()
+    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+
+const searchByFirstLetter = (letter, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?f=${letter}`)
+  .then((response) => response.json()
+    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+
+const searchByHelper = {
+  name: searchByName,
+  ingredient: searchByIngredients,
+  'first-letter': searchByFirstLetter,
+};
+
+export const searchBy = (search, info, type) => searchByHelper[search](info, type);
