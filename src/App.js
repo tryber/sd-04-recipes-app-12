@@ -25,6 +25,11 @@ function App() {
           path="/comidas/:id"
           render={(props) => <Details props={props} type="meal" />}
         />
+        <Route
+          exact
+          path="/bebidas/:id"
+          render={(props) => <Details props={props} type="cocktail" />}
+        />
         <Route path="/:type/:id" component={Login} />
       </Switch>
     </Router>

@@ -7,7 +7,7 @@ export default function MainRecipes({ type }) {
   return (
     <div>
       <Categories type={type} />
-      <CardRecipes />
+      <CardRecipes type={type} />
     </div>
   );
 }
