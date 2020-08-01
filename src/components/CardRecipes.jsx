@@ -8,21 +8,20 @@ const CardRecipes = ({ history, type }) => {
   return !loading ? (
     <div>
       {recipes.map((recipe, index) => (
-        <li key={recipe.id}>
-          <button
-            type="button"
-            data-testid={`${index}-recipe-card`}
-            onClick={
-              // prettier-ignore
-              () => history.push(
-                `${type === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`,
-              )
-            }
-          >
-            <img src={recipe.image} alt="imagem" data-testid={`${index}-card-img`} />
-            <p data-testid={`${index}-card-name`}>{recipe.name}</p>
-          </button>
-        </li>
+        <button
+          key={recipe.id}
+          type="button"
+          data-testid={`${index}-recipe-card`}
+          onClick={
+            // prettier-ignore
+            () => history.push(
+              `${type === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`,
+            )
+          }
+        >
+          <img src={recipe.image} alt="imagem" data-testid={`${index}-card-img`} />
+          <p data-testid={`${index}-card-name`}>{recipe.name}</p>
+        </button>
       ))}
     </div>
   ) : (
