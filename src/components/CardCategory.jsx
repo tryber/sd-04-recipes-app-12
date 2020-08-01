@@ -12,6 +12,7 @@ const CardCategory = ({ handleClick, categories }) => (
     </button>
     {categories.map((category) => (
       <button
+        key={category.strCategory}
         data-testid={`${category.strCategory}-category-filter`}
         type="button"
         onClick={(e) => handleClick(e.target.innerHTML)}

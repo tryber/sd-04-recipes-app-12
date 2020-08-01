@@ -7,7 +7,7 @@ import CardCategories from './CardCategory';
 const Categories = ({ type }) => {
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState('');
-  const { updateRecipes } = useRecipes();
+  const { updateRecipes, setLoading } = useRecipes();
   // prettier-ignore
   useEffect(() => {
     fetch.getRecipeCategories(type)
@@ -15,17 +15,24 @@ const Categories = ({ type }) => {
   }, [type]);
 
   useEffect(() => {
-    if (filter) {
-      fetch.searchRecipesByCategory(filter, type).then((data) => {
-        updateRecipes(data);
-      });
-    }
+    setLoading(true);
+    const fetchRecipes = filter
+      ? fetch.searchRecipesByCategory(filter, type)
+      : fetch.searchRecipesByName('', type);
+    fetchRecipes.then((data) => {
+      updateRecipes(data);
+      setLoading(false);
+    });
   }, [filter]);
   // prettier-ignore
   const handleClick = (category) => ((category === 'All' || category === filter)
     ? setFilter('') : setFilter(category));
 
-  return <CardCategories handleClick={handleClick} categories={categories} />;
+  return categories.length > 0 ? (
+    <CardCategories handleClick={handleClick} categories={categories} />
+  ) : (
+    <p>loading...</p>
+  );
 };
 
 Categories.propTypes = { type: PropTypes.string.isRequired };
