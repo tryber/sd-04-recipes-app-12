@@ -1,15 +1,38 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import { Login, Main, Details } from './pages';
+import Login from './pages/Login';
+import MainRecipes from './pages/ MainRecipes/index';
+import Details from './pages/Details/index';
 
 function App() {
   return (
-    <Switch>
-      <Route exact path="/" component={Login} />
-      <Route path="/:type" component={Main} />
-      <Route path="/:type/:id" component={Details} />
-    </Switch>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route
+          exact
+          path="/comidas"
+          render={(props) => <MainRecipes props={props} type="meal" />}
+        />
+        <Route
+          exact
+          path="/bebidas"
+          render={(props) => <MainRecipes props={props} type="cocktail" />}
+        />
+        <Route
+          exact
+          path="/comidas/:id"
+          render={(props) => <Details props={props} type="meal" />}
+        />
+        <Route
+          exact
+          path="/bebidas/:id"
+          render={(props) => <Details props={props} type="cocktail" />}
+        />
+        <Route path="/:type/:id" component={Login} />
+      </Switch>
+    </Router>
   );
 }
 
