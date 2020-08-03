@@ -1,0 +1,6 @@
+.foooter {
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+}
