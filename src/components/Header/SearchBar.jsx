@@ -31,12 +31,12 @@ const SearchBar = ({ type }) => {
 
   const onChange = ({ target: { value, name } }) => setState({ ...state, [name]: value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (radioSearch === 'first-letter' && search.lenght > 1) {
       alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
-      const recipes = searchBy(radioSearch, search, type);
+      const recipes = await searchBy(radioSearch, search, type);
       if (recipes.lenght > 1) updateRecipes(recipes);
       else if (recipes.lenght === 0) {
         alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
