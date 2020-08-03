@@ -18,8 +18,8 @@ const CardRecipes = ({ type }) => {
       ))}
     </div>
   ) : (
-    <p>loading...</p>
-  );
+      <p>loading...</p>
+    );
 };
 
 CardRecipes.propTypes = {
