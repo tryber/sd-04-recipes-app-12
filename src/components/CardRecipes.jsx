@@ -17,9 +17,7 @@ const CardRecipes = ({ type }) => {
         </Link>
       ))}
     </div>
-  ) : (
-    <p>loading...</p>
-  );
+  ) : <p>loading...</p>;
 };
 
 CardRecipes.propTypes = {
