@@ -1,47 +1,28 @@
-export const getRecipeCategories = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/list.php?c=list`)
+import { convertRecipes } from '../functions/convertRecipes';
+
+const fetchURL = (type, path) => fetch(`https://www.the${type}db.com/api/json/v1/1/${path}`)
   .then((response) => response.json()
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
 
-export const getRecipeAreas = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/list.php?a=list`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+const fetchConvert = (type, path, quantity) => fetchURL(type, path)
+  .then((json) => convertRecipes(json, quantity));
 
-export const getIngredientsList = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/list.php?i=list`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const getRecipeCategories = (type) => fetchURL(type, 'list.php?c=list');
 
-export const getRecipeDetailsById = (id, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/lookup.php?i=${id}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const getRecipeAreas = (type) => fetchURL(type, 'list.php?a=list');
 
-export const getRandomRecipe = (type) => fetch(`https://www.the${type}db.com/api/json/v1/1/random.php`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const getIngredientsList = (type) => fetchURL(type, 'list.php?i=list');
 
-export const searchRecipesByCategory = (category, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/filter.php?c=${category}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const getRecipeDetailsById = (id, type) => fetchConvert(type, `lookup.php?i=${id}`);
 
-export const searchRecipesByArea = (area) => fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const getRandomRecipe = (type) => fetchConvert(type, 'random.php');
 
-const searchByIngredients = (ingredients, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/filter.php?i=${ingredients}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
-
-const searchByName = (meal, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?s=${meal}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
-
-const searchByFirstLetter = (letter, type) => fetch(`https://www.the${type}db.com/api/json/v1/1/search.php?f=${letter}`)
-  .then((response) => response.json()
-    .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
+export const searchRecipesByCategory = (category, type) => fetchConvert(type, `filter.php?c=${category}`);
 
 const searchByHelper = {
-  name: searchByName,
-  ingredient: searchByIngredients,
-  'first-letter': searchByFirstLetter,
+  name: 'search.php?s=',
+  ingredient: 'filter.php?i=',
+  'first-letter': 'search.php?f=',
 };
 
-export const searchBy = (search, info, type) => searchByHelper[search](info, type);
+export const searchBy = (search, info, type) => fetchConvert(type, `${searchByHelper[search]}${info}`);

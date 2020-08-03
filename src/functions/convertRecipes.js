@@ -41,9 +41,9 @@ export const disruptRecipe = (recipe, type) => {
   };
 };
 
-export const convertRecipes = (recipes) => {
-  const data = recipes.meals || recipes.drinks;
+export const convertRecipes = (recipes, quantity = 12) => {
+  const data = recipes.meals || recipes.drinks || [];
   const type = recipes.meals ? 'Meal' : 'Drink';
 
-  return data.slice(0, 12).map((recipe) => disruptRecipe(recipe, type));
+  return data.slice(0, quantity).map((recipe) => disruptRecipe(recipe, type));
 };
