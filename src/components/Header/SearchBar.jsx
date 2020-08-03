@@ -37,15 +37,15 @@ const SearchBar = ({ type }) => {
     e.preventDefault();
     if (radioSearch === 'first-letter' && search.length > 1) {
       alert('Sua busca deve conter somente 1 (um) caracter');
+      return null;
+    }
+    const recipes = await searchBy(radioSearch, search, type);
+    if (recipes.length > 1) setRecipes(recipes);
+    else if (recipes.length === 0) {
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     } else {
-      const recipes = await searchBy(radioSearch, search, type);
-      if (recipes.length > 1) setRecipes(recipes);
-      else if (recipes.length === 0) {
-        alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      } else {
-        const path = type === 'meals' ? 'comidas' : 'bebidas';
-        history.push(`/${path}/${recipes[0].id}`);
-      }
+      const path = type === 'meals' ? 'comidas' : 'bebidas';
+      history.push(`/${path}/${recipes[0].id}`);
     }
   };
   return (
