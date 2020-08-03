@@ -37,7 +37,7 @@ const SearchBar = ({ type }) => {
     e.preventDefault();
     if (radioSearch === 'first-letter' && search.length > 1) {
       alert('Sua busca deve conter somente 1 (um) caracter');
-    } else if (radioSearch) {
+    } else {
       const recipes = await searchBy(radioSearch, search, type);
       if (recipes.length > 1) setRecipes(recipes);
       else if (recipes.length === 0) {
