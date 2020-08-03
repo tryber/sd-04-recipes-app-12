@@ -5,8 +5,8 @@ import { convertRecipes } from '../functions/convertRecipes';
 const RecipesContext = createContext({});
 
 export const RecipesProvider = ({ children }) => {
-  const [recipes, setRecipes] = useState();
-  const [loading, setLoading] = useState();
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
   const updateRecipes = (data) => setRecipes(convertRecipes(data));
 
   const value = {
