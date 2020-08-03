@@ -1,17 +1,30 @@
-import { createContext, useContext } from "react";
+import React, { useState, createContext, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { convertRecipes } from '../functions/convertRecipes';
 
-const context = createContext();
+const RecipesContext = createContext({});
 
-export const RecipesContext = ({ children }) => {
-  const value = {};
+export const RecipesProvider = ({ children }) => {
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const updateRecipes = (data) => setRecipes(convertRecipes(data));
 
-  return (
-    <context.Provider value={value}>
-      {children}
-    </context.Provider>);
+  const value = {
+    recipes,
+    setRecipes,
+    loading,
+    setLoading,
+    updateRecipes,
+  };
+
+  return <RecipesContext.Provider value={value}>{children}</RecipesContext.Provider>;
+};
+
+export function useRecipes() {
+  const context = useContext(RecipesContext);
+  return context;
 }
 
-export const useRecipe = () => {
-  const result = useContext(context);
-  return result;
-}
+RecipesProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
