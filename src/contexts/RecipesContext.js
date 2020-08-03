@@ -16,7 +16,6 @@ export const RecipesProvider = ({ children }) => {
     setLoading,
     updateRecipes,
   };
-
   return <RecipesContext.Provider value={value}>{children}</RecipesContext.Provider>;
 };
 
