@@ -18,21 +18,21 @@ const Categories = ({ type }) => {
     setLoading(true);
     const fetchRecipes = filter
       ? fetch.searchRecipesByCategory(filter, type)
-      : fetch.searchRecipesByName('', type);
+      : fetch.searchBy('name', '', type);
     fetchRecipes.then((data) => {
       updateRecipes(data);
       setLoading(false);
     });
-  }, [filter]);
+  }, [filter, setLoading, type, updateRecipes]);
   // prettier-ignore
   const handleClick = (category) => ((category === 'All' || category === filter)
     ? setFilter('') : setFilter(category));
 
-  return categories.length > 0 ? (
-    <CardCategories handleClick={handleClick} categories={categories} />
-  ) : (
-    <p>loading...</p>
-  );
+  if (categories.length > 0) {
+    return <CardCategories handleClick={handleClick} categories={categories} />;
+  }
+
+  return <p>loading...</p>;
 };
 
 Categories.propTypes = { type: PropTypes.string.isRequired };
