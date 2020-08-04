@@ -25,4 +25,4 @@ const searchByHelper = {
   'first-letter': 'search.php?f=',
 };
 
-export const searchBy = (search, info, type) => fetchConvert(type, `${searchByHelper[search]}${info}`);
+export const searchBy = (search, info, type, quantity) => fetchConvert(type, `${searchByHelper[search]}${info}`, quantity);
