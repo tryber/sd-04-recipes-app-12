@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
-import MainRecipes from './pages/ MainRecipes/index';
+import MainRecipes from './pages/MainRecipes/index';
 import Details from './pages/Details/index';
 
 function App() {
