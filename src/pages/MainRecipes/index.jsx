@@ -9,7 +9,7 @@ export default function MainRecipes({ type }) {
     <div>
       <Header type={type} />
       <Categories type={type} />
-      <CardRecipes type={type} />
+      <CardRecipes datatest="recipe" type={type} />
     </div>
   );
 }
