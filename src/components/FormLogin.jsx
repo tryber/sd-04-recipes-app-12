@@ -1,6 +1,15 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Toast from 'react-bootstrap/Toast';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button';
+
+import './CSS/login.css';
+
 const checkEmail = (email) => email.match(/\S+@\S+\.\S+/i);
 
 const checkPassword = (password) => password.length > 6;
@@ -24,17 +33,18 @@ const saveEmail = (email) => localStorage.setItem('user', JSON.stringify({ email
 
 const submitButton = (email, password) => (
   <Link to="/comidas">
-    <button
+    <Button
       type="button"
       disabled={!(checkEmail(email) && checkPassword(password))}
       data-testid="login-submit-btn"
+      className="login-submit-btn"
       onClick={() => {
         saveTokens();
         saveEmail(email);
       }}
     >
       Entrar
-    </button>
+    </Button>
   </Link>
 );
 
@@ -43,11 +53,20 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <div>
+    <Container className="p-3">
+    <Jumbotron>
+    <Row className="formLogin">
+      <h1>App Receitas</h1>
+    <Col xs lg="2">
+      <label>E-mail</label>
       {loginInput(email, setEmail, 'email')}
+      <label>Senha</label>
       {loginInput(password, setPassword, 'password')}
       {submitButton(email, password)}
-    </div>
+    </Col>
+    </Row>
+    </Jumbotron>
+    </Container>
   );
 };
 

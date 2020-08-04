@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import { RecipesProvider } from './contexts/RecipesContext';
 
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 ReactDOM.render(
   <RecipesProvider>
     <App />
