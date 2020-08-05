@@ -1,17 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import CardRecipes from '../../components/CardRecipes';
 import Categories from '../../components/Categories';
 import Header from '../../components/Header';
 
-export default function MainRecipes({ type }) {
+export default function MainRecipes() {
   return (
     <div>
-      <Header type={type} />
-      <Categories type={type} />
-      <CardRecipes datatest="recipe" type={type} />
+      <Header />
+      <Categories />
+      <CardRecipes datatest="recipe" />
     </div>
   );
 }
-
-MainRecipes.propTypes = { type: PropTypes.string.isRequired };

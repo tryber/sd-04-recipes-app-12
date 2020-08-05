@@ -6,7 +6,6 @@ const RecipesContext = createContext({});
 export const RecipesProvider = ({ children }) => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const value = {
     recipes,
     setRecipes,

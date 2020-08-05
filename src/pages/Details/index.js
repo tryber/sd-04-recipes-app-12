@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
+import { Link, useParams, useRouteMatch, useLocation } from 'react-router-dom';
 import * as fetch from '../../services/recipesAPI';
-import { useRecipes } from '../../contexts/RecipesContext';
 import CardRecipes from '../../components/CardRecipes';
+import ShareBtn from '../../components/ShareBtn';
+import { getType } from '../../functions/type';
 
 const opts = {
   height: '198',
@@ -12,6 +13,7 @@ const opts = {
     autoplay: 1,
   },
 };
+
 const getVideo = ([first]) => (
   <div>
     <h2>Video</h2>
@@ -20,6 +22,20 @@ const getVideo = ([first]) => (
         <YouTube videoId={first.youtube.split('=')[1]} opts={opts} />
       </div>
     )}
+  </div>
+);
+
+const getHeaderRecipe = ([first]) => (
+  <div>
+    <img src={first.image} alt="imagem" data-testid="recipe-photo" />
+    <p data-testid="recipe-title">{first.name}</p>
+    <p data-testid="recipe-category">
+      {`${first.category} ${first.alcoholicOrNot ? first.alcoholicOrNot : ''}`}
+    </p>
+    <ShareBtn testId="" />
+    <button type="button" data-testid="favorite-btn">
+      favorite
+    </button>
   </div>
 );
 
@@ -36,32 +52,53 @@ const getIngredients = ([first]) => (
   </div>
 );
 
+const getRecommended = () => (
+  <div className="recommended-recipes">
+    <h4>Recomendadas</h4>
+    <CardRecipes datatest="recomendation" />
+  </div>
+);
+
 const getInstructions = ([first]) => (
   <div>
     <h2>instructions</h2>
     <p data-testid="instructions">{first.instructions}</p>
   </div>
 );
-export default function Details({
-  props: {
-    match: {
-      params: { id },
-    },
-  },
-  type,
-}) {
-  const { setRecipes, setLoading } = useRecipes();
+
+const getStatusRecipes = (id) => {
+  const DoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'))
+    ? JSON.parse(localStorage.getItem('doneRecipes')).some((recipe) => recipe.id === id)
+    : false;
+  // prettier-ignore
+  const ProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
+    ? Object.keys(JSON.parse(localStorage.getItem('inProgressRecipes'))).some(
+      (key) => JSON.parse(localStorage.getItem('inProgressRecipes'))[key][id],
+    ) : false;
+
+  return DoneRecipes ? false : ProgressRecipes ? 'Continuar Receita' : 'Iniciar Receita';
+};
+
+const getButtonStart = (id, pathname) => {
+  const status = getStatusRecipes(id);
+  return (
+    status && (
+      <Link to={`${pathname}/in-progress`} className="button-start" data-testid="start-recipe-btn">
+        {status}
+      </Link>
+    )
+  );
+};
+export default function Details() {
   const [recipesDetails, setRecipesDetails] = useState([]);
+  const { id } = useParams();
+  const type = getType(useRouteMatch());
+  const { pathname } = useLocation();
   useEffect(() => {
     async function fetchRecipes() {
       setRecipesDetails([]);
       await fetch.getRecipeDetailsById(id, type).then((data) => {
         setRecipesDetails(data);
-      });
-      setLoading(true);
-      fetch.searchBy('name', '', `${type === 'meal' ? 'cocktail' : 'meal'}`, 6).then((data) => {
-        setRecipes(data);
-        setLoading(false);
       });
     }
     fetchRecipes();
@@ -69,34 +106,14 @@ export default function Details({
 
   return recipesDetails.length > 0 ? (
     <div>
-      <img src={recipesDetails[0].image} alt="imagem" data-testid="recipe-photo" />
-      <p data-testid="recipe-title">{recipesDetails[0].name}</p>
-      <p data-testid="recipe-category">
-        {`${recipesDetails[0].category} ${
-          recipesDetails[0].alcoholicOrNot ? recipesDetails[0].alcoholicOrNot : ''
-        }`}
-      </p>
-      <button type="button" data-testid="share-btn">
-        share
-      </button>
-      <button type="button" data-testid="favorite-btn">
-        favorite
-      </button>
+      {getHeaderRecipe(recipesDetails)}
       {getIngredients(recipesDetails)}
       {getInstructions(recipesDetails)}
       {getVideo(recipesDetails)}
-      <h4>Recomendadas</h4>
-      <CardRecipes datatest="recomendation" type={`${type === 'meal' ? 'cocktail' : 'meal'}`} />
-      <button type="button" data-testid="start-recipe-btn">
-        Iniciar receitas
-      </button>
+      {getRecommended(type)}
+      {getButtonStart(id, pathname)}
     </div>
   ) : (
     <div>loading...</div>
   );
 }
-
-Details.propTypes = {
-  props: PropTypes.objectOf(PropTypes.any).isRequired,
-  type: PropTypes.string.isRequired,
-};
