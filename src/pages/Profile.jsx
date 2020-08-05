@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import BottomMenu from '../components/BottomMenu';
 
-export default function Profile() {
+const Profile = () => {
   const { email } = JSON.parse(localStorage.user);
   const history = useHistory();
   const leave = () => {
@@ -21,4 +21,5 @@ export default function Profile() {
       <BottomMenu />
     </div>
   );
-}
+};
+export default Profile;
