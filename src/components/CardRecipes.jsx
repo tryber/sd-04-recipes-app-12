@@ -6,7 +6,9 @@ import { getTypeInverted, getType } from '../functions/type';
 import * as fetch from '../services/recipesAPI';
 
 const CardRecipes = ({ datatest }) => {
-  const { recipes, loading, setRecipes, setLoading } = useRecipes();
+  const {
+    recipes, loading, setRecipes, setLoading,
+  } = useRecipes();
   const typeInverted = getTypeInverted(datatest, useRouteMatch());
   const type = getType(useRouteMatch());
   useEffect(() => {
@@ -28,7 +30,12 @@ const CardRecipes = ({ datatest }) => {
           to={`${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`}
         >
           <div data-testid={`${index}-${datatest}-card`} className="card">
-            <img src={recipe.image} alt="imagem" data-testid={`${index}-card-img`} />
+            <img
+              src={recipe.image}
+              alt="imagem"
+              data-testid={`${index}-card-img`}
+              className="card-image"
+            />
             <p data-testid="recipe-category">
               {`${recipe.category}
             ${recipe.alcoholicOrNot ? recipe.alcoholicOrNot : ''}`}
@@ -36,7 +43,7 @@ const CardRecipes = ({ datatest }) => {
             <p
               data-testid={`${index}-${datatest === 'recipe' ? 'card' : datatest}-${
                 datatest === 'recipe' ? 'name' : 'title'
-              }`}
+                }`}
             >
               {recipe.name}
             </p>
@@ -45,8 +52,8 @@ const CardRecipes = ({ datatest }) => {
       ))}
     </div>
   ) : (
-    <p>loading...</p>
-  );
+      <p>loading...</p>
+    );
 };
 
 CardRecipes.propTypes = {

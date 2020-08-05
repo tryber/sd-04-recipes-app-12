@@ -5,6 +5,7 @@ import * as fetch from '../../services/recipesAPI';
 import CardRecipes from '../../components/CardRecipes';
 import ShareBtn from '../../components/ShareBtn';
 import { getType } from '../../functions/type';
+import './Details.css';
 
 const opts = {
   height: '198',
@@ -114,6 +115,6 @@ export default function Details() {
       {getButtonStart(id, pathname)}
     </div>
   ) : (
-    <div>loading...</div>
-  );
+      <div>loading...</div>
+    );
 }
