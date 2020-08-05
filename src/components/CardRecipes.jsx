@@ -42,8 +42,7 @@ const CardRecipes = ({ datatest }) => {
             </p>
             <p
               data-testid={`${index}-${datatest === 'recipe' ? 'card' : datatest}-${
-                datatest === 'recipe' ? 'name' : 'title'
-                }`}
+                datatest === 'recipe' ? 'name' : 'title'}`}
             >
               {recipe.name}
             </p>
@@ -51,9 +50,7 @@ const CardRecipes = ({ datatest }) => {
         </Link>
       ))}
     </div>
-  ) : (
-      <p>loading...</p>
-    );
+  ) : <p>loading...</p>;
 };
 
 CardRecipes.propTypes = {

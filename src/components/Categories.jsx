@@ -23,18 +23,18 @@ const Categories = ({ type }) => {
       setRecipes(data);
       setLoading(false);
     });
-  }, [filter]);
+  }, [filter, setRecipes, setLoading, type]);
   // prettier-ignore
   const handleClick = (category) => ((category === 'All' || category === filter)
     ? setFilter('') : setFilter(category));
 
   return categories.length > 0 ? (
     <CardCategories handleClick={handleClick} categories={categories} />
-  ) : (
-    <p>loading...</p>
-  );
+  ) : <p>loading...</p>;
 };
 
-Categories.propTypes = { type: PropTypes.string.isRequired };
+Categories.propTypes = {
+  type: PropTypes.string.isRequired,
+};
 
 export default Categories;

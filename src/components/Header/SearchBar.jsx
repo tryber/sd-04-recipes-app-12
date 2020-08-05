@@ -55,9 +55,7 @@ const SearchBar = ({ type }) => {
     <form onSubmit={onSubmit}>
       <input data-testid="search-input" name="search" required onChange={onChange} />
       {radios.map((r) => radioInput(r, onChange))}
-      <button data-testid="exec-search-btn" type="submit">
-        Buscar
-      </button>
+      <button data-testid="exec-search-btn" type="submit">Buscar</button>
     </form>
   );
 };
