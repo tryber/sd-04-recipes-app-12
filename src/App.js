@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import { Login, MainRecipes, Details, Profile } from './pages';
+import {
+  Login, MainRecipes, Details, Profile, Done, Favorites,
+} from './pages';
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route path="/perfil" component={Profile} />
+        <Route path="/receitas-feitas" component={Done} />
+        <Route path="/receitas-favoritas" component={Favorites} />
         <Route
           exact
           path="/comidas"
