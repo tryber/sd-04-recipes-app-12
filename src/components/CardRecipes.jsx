@@ -16,7 +16,7 @@ const CardRecipes = ({ type }) => {
         <Row className="">
           <Col></Col>
           <Col>
-            <Card key={recipe.id} data-testid={`${index}-recipe-card`} style={{ width: '30rem' }}>
+            <Card key={recipe.id} data-testid={`${index}-recipe-card`} style={{ width: '30rem' }} bg="secondary">
               <Card.Img variant="top" src={recipe.image} alt="imagem" data-testid={`${index}-card-img`} />
               <Card.Body>
                 <Card.Title data-testid={`${index}-card-name`}>{recipe.name}</Card.Title>

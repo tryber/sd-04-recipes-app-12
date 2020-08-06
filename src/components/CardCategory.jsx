@@ -2,27 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button';
 import './CSS/category.css'
 
 const CardCategory = ({ handleClick, categories }) => (
   <Container>
     <Row className="category">
-    <button
-      type="button"
+    <Button
+      variant="primary"
+      size="lg"
       data-testid="All-category-filter"
       onClick={(e) => handleClick(e.target.innerHTML)}
     >
       All
-    </button>
+    </Button>
     {categories.map((category) => (
-      <button
+      <Button
+      variant="primary"
+      size="lg"
         key={category.strCategory}
         data-testid={`${category.strCategory}-category-filter`}
-        type="button"
         onClick={(e) => handleClick(e.target.innerHTML)}
       >
         {category.strCategory}
-      </button>
+      </Button>
     ))}
     </Row>
     </Container>
