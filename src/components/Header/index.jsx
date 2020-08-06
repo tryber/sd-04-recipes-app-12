@@ -7,9 +7,11 @@ import searchIcon from '../../images/searchIcon.svg';
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
+const capitalizePhrase = (phrase) => phrase.map((word) => capitalize(word)).join(' ');
+
 const Header = ({ type }) => {
   const [showSearch, setShowSearch] = useState(false);
-  const title = capitalize(useHistory().location.pathname.split('/')[1]);
+  const title = capitalizePhrase(useHistory().location.pathname.split('/')[1].split('-'));
   return (
     <div>
       <Link to="/perfil">

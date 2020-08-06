@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import {
-  Login, MainRecipes, Details, Profile, Done, Favorites,
+  Login, MainRecipes, Details, Profile, DoneFav,
 } from './pages';
 
 function App() {
@@ -11,8 +11,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route path="/perfil" component={Profile} />
-        <Route path="/receitas-feitas" component={Done} />
-        <Route path="/receitas-favoritas" component={Favorites} />
+        <Route path="/receitas-feitas" component={DoneFav} />
+        <Route path="/receitas-favoritas" component={DoneFav} />
         <Route
           exact
           path="/comidas"
