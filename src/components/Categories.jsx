@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useRouteMatch } from 'react-router-dom';
 import * as fetch from '../services/recipesAPI';
 import { useRecipes } from '../contexts/RecipesContext';
 import CardCategories from './CardCategory';
+import { getType } from '../functions/type';
 
-const Categories = ({ type }) => {
+const Categories = () => {
+  const type = getType(useRouteMatch());
   const [categories, setCategories] = useState([]);
   const [filter, setFilter] = useState('');
   const { setRecipes, setLoading } = useRecipes();
@@ -30,11 +32,9 @@ const Categories = ({ type }) => {
 
   return categories.length > 0 ? (
     <CardCategories handleClick={handleClick} categories={categories} />
-  ) : <p>loading...</p>;
-};
-
-Categories.propTypes = {
-  type: PropTypes.string.isRequired,
+  ) : (
+    <p>loading...</p>
+  );
 };
 
 export default Categories;
