@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import ShareBtn from '../ShareBtn';
+import FavoriteBtn from '../FavoritesBtn';
 
 const RecipeInfo = ({
-  index, isFav, info: {
+  index, isFav, info, info: {
     image, name, alcoholicOrNot, category, area, doneDate, id, tags, type,
   },
 }) => {
@@ -19,8 +21,8 @@ const RecipeInfo = ({
       <span data-testid={`${index}-horizontal-name`} onClick={onClick}>
         {name}
       </span>
-      {/* <adicionar botao de compartilhar> */}
-      {/* isFav && <adicionar botão de favoritar> */}
+      <ShareBtn dataTestId={`${index}-horizontal-share-btn`} />
+      {isFav && <FavoriteBtn dataTestId={`${index}-horizontal-favorite-btn`} recipe={info} />}
       {!isFav && (
         <Fragment>
           <span data-testid={`${index}-horizontal-done-date`}>

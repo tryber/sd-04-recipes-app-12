@@ -34,7 +34,7 @@ const getHeaderRecipe = ([first]) => (
     <p data-testid="recipe-category">
       {`${first.category} ${first.alcoholicOrNot ? first.alcoholicOrNot : ''}`}
     </p>
-    <ShareBtn testId="" />
+    <ShareBtn dataTestId="share-btn" />
     <FavoritesBtn dataTestId="favorite-btn" recipe={first} />
   </div>
 );

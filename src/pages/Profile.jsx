@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import BottomMenu from '../components/BottomMenu';
 
 const Profile = () => {
-  const { email } = JSON.parse(localStorage.user);
+  const { email } = localStorage.user ? JSON.parse(localStorage.user) : {};
   const history = useHistory();
   const leave = () => {
     localStorage.clear();

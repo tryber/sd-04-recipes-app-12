@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useParams, useRouteMatch } from 'react-router-dom';
 import { getType } from '../functions/type';
 
-export default function ShareBtn() {
+export default function ShareBtn({ dataTestId }) {
   const [share, setShare] = useState('');
   const { id } = useParams();
   const type = getType(useRouteMatch());
@@ -10,7 +11,7 @@ export default function ShareBtn() {
     <div>
       <button
         type="button"
-        data-testid="share-btn"
+        data-testid={dataTestId}
         onClick={() => {
           // prettier-ignore
           navigator.clipboard.writeText(
@@ -25,3 +26,7 @@ export default function ShareBtn() {
     </div>
   );
 }
+
+ShareBtn.propTypes = {
+  dataTestId: PropTypes.string.isRequired,
+};
