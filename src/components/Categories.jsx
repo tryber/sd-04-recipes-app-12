@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useRouteMatch } from 'react-router-dom';
 import * as fetch from '../services/recipesAPI';
 import { useRecipes } from '../contexts/RecipesContext';
@@ -33,11 +32,9 @@ const Categories = () => {
 
   return categories.length > 0 ? (
     <CardCategories handleClick={handleClick} categories={categories} />
-  ) : <p>loading...</p>;
-};
-
-Categories.propTypes = {
-  type: PropTypes.string.isRequired,
+  ) : (
+    <p>loading...</p>
+  );
 };
 
 export default Categories;

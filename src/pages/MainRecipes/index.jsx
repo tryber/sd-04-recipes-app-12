@@ -9,7 +9,7 @@ export default function MainRecipes() {
     <div>
       <Header />
       <Categories />
-      <CardRecipes datatest="recipe" />
+      <CardRecipes datatest="recipe" qtd={12} />
       <BottomMenu />
     </div>
   );

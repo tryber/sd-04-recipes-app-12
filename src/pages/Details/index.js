@@ -4,6 +4,7 @@ import { Link, useParams, useRouteMatch, useLocation } from 'react-router-dom';
 import * as fetch from '../../services/recipesAPI';
 import CardRecipes from '../../components/CardRecipes';
 import ShareBtn from '../../components/ShareBtn';
+import FavoritesBtn from '../../components/FavoritesBtn';
 import { getType } from '../../functions/type';
 import './Details.css';
 
@@ -34,9 +35,7 @@ const getHeaderRecipe = ([first]) => (
       {`${first.category} ${first.alcoholicOrNot ? first.alcoholicOrNot : ''}`}
     </p>
     <ShareBtn testId="" />
-    <button type="button" data-testid="favorite-btn">
-      favorite
-    </button>
+    <FavoritesBtn dataTestId="favorite-btn" recipe={first} />
   </div>
 );
 
@@ -56,7 +55,7 @@ const getIngredients = ([first]) => (
 const getRecommended = () => (
   <div className="recommended-recipes">
     <h4>Recomendadas</h4>
-    <CardRecipes datatest="recomendation" />
+    <CardRecipes datatest="recomendation" qtd={6} />
   </div>
 );
 
@@ -115,6 +114,6 @@ export default function Details() {
       {getButtonStart(id, pathname)}
     </div>
   ) : (
-      <div>loading...</div>
-    );
+    <div>loading...</div>
+  );
 }
