@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { searchBy } from '../../services/recipesAPI';
 import { useRecipes } from '../../contexts/RecipesContext';
 
-const radios = [ // pra ajudar no CC
+const radios = [
+  // pra ajudar no CC
   ['ingredient', 'Ingrediente'],
   ['name', 'Nome'],
   ['first-letter', 'Primeira letra'],
@@ -14,7 +15,7 @@ const radioInput = ([value, text], onChange) => (
   <label htmlFor={value} key={value + text}>
     <input
       type="radio"
-      data-testid={`${value}-search-radio"`}
+      data-testid={`${value}-search-radio`}
       id={value}
       name="radioSearch"
       value={value}
@@ -31,7 +32,7 @@ const validate = async (radioSearch, search, type, setRecipes, history) => {
   else if (recipes.length === 0) {
     alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
   } else {
-    const path = type === 'meals' ? 'comidas' : 'bebidas';
+    const path = type === 'meal' ? 'comidas' : 'bebidas';
     history.push(`/${path}/${recipes[0].id}`);
   }
 };
@@ -44,13 +45,11 @@ const SearchBar = ({ type }) => {
 
   const onChange = ({ target: { value, name } }) => setState({ ...state, [name]: value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (radioSearch === 'first-letter' && search.length > 1) {
-      alert('Sua busca deve conter somente 1 (um) caracter');
-    } else {
-      validate(radioSearch, search, type, setRecipes, history);
-    }
+    return radioSearch === 'first-letter' && search.length > 1
+      ? alert('Sua busca deve conter somente 1 (um) caracter')
+      : validate(radioSearch, search, type, setRecipes, history);
   };
   return (
     <form onSubmit={onSubmit}>

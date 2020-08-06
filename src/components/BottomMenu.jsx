@@ -4,15 +4,15 @@ import { drinkIcon, exploreIcon, mealIcon } from '../images';
 import './CSS/BottomMenu.css';
 
 const BottomMenu = () => (
-  <footer className="footer">
+  <footer className="footer" data-testid="footer" >
     <Link className="btn" to="/bebidas">
-      <img src={drinkIcon} alt="drink-icon" />
+      <img src={drinkIcon} alt="drink-icon" data-testid="drinks-bottom-btn" />
     </Link>
     <Link to="/explorar">
-      <img src={exploreIcon} alt="explore-icon" />
+      <img src={exploreIcon} alt="explore-icon" data-testid="explore-bottom-btn" />
     </Link>
     <Link to="/comidas">
-      <img src={mealIcon} alt="meal-icon" />
+      <img src={mealIcon} alt="meal-icon" data-testid="food-bottom-btn" />
     </Link>
   </footer>
 );
