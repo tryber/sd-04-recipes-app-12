@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import './CSS/category.css'
 
 const CardCategory = ({ handleClick, categories }) => (
-  <div>
+  <Container>
+    <Row className="category">
     <button
       type="button"
       data-testid="All-category-filter"
@@ -20,7 +24,8 @@ const CardCategory = ({ handleClick, categories }) => (
         {category.strCategory}
       </button>
     ))}
-  </div>
+    </Row>
+    </Container>
 );
 
 CardCategory.propTypes = {

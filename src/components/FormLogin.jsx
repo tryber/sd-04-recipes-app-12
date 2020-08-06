@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -54,18 +52,18 @@ const Login = () => {
 
   return (
     <Container className="p-3">
-    <Jumbotron>
-    <Row className="formLogin">
-      <h1>App Receitas</h1>
-    <Col xs lg="2">
-      <label>E-mail</label>
-      {loginInput(email, setEmail, 'email')}
-      <label>Senha</label>
-      {loginInput(password, setPassword, 'password')}
-      {submitButton(email, password)}
-    </Col>
-    </Row>
-    </Jumbotron>
+      <Jumbotron>
+        <Row className="formLogin">
+          <h1>App Receitas</h1>
+          <Col xs lg="2">
+            <label>E-mail</label>
+            {loginInput(email, setEmail, 'email')}
+            <label>Senha</label>
+            {loginInput(password, setPassword, 'password')}
+            {submitButton(email, password)}
+          </Col>
+        </Row>
+      </Jumbotron>
     </Container>
   );
 };
