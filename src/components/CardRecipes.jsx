@@ -35,7 +35,7 @@ const CardRecipes = ({ datatest, qtd }) => {
               className="card-image"
             />
             <p data-testid="recipe-category">
-              {`${recipe.category}
+              {`${recipe.category ? recipe.category : ''}
             ${recipe.alcoholicOrNot ? recipe.alcoholicOrNot : ''}`}
             </p>
             <p
