@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
-import { Link, useParams, useRouteMatch, useLocation } from 'react-router-dom';
+import {
+  Link, useParams, useRouteMatch, useLocation,
+} from 'react-router-dom';
 import * as fetch from '../../services/recipesAPI';
 import CardRecipes from '../../components/CardRecipes';
 import ShareBtn from '../../components/ShareBtn';
@@ -19,11 +21,9 @@ const opts = {
 const getVideo = ([first]) => (
   <div>
     <h2>Video</h2>
-    {first.youtube && (
-      <div data-testid="video">
-        <YouTube videoId={first.youtube.split('=')[1]} opts={opts} />
-      </div>
-    )}
+    <div data-testid="video">
+      <YouTube videoId={first.youtube.split('=')[1]} opts={opts} />
+    </div>
   </div>
 );
 
@@ -34,7 +34,7 @@ const getHeaderRecipe = ([first]) => (
     <p data-testid="recipe-category">
       {`${first.category} ${first.alcoholicOrNot ? first.alcoholicOrNot : ''}`}
     </p>
-    <ShareBtn testId="" />
+    <ShareBtn dataTestId="share-btn" id={first.id} type={first.type} />
     <FavoritesBtn dataTestId="favorite-btn" recipe={first} />
   </div>
 );
@@ -109,7 +109,7 @@ export default function Details() {
       {getHeaderRecipe(recipesDetails)}
       {getIngredients(recipesDetails)}
       {getInstructions(recipesDetails)}
-      {getVideo(recipesDetails)}
+      {recipesDetails[0].youtube && getVideo(recipesDetails)}
       {getRecommended(type)}
       {getButtonStart(id, pathname)}
     </div>
