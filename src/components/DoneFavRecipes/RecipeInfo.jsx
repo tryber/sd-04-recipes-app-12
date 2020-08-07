@@ -35,13 +35,13 @@ const RecipeInfo = ({
       </button>
       )}
       {!isFav && (
-        <>
+        <Fragment>
           <span data-testid={`${index}-horizontal-done-date`}>
             {`Feita em: ${doneDate}`}
           </span>
           <span data-testid={`${index}-${tags[0]}-horizontal-tag`}>{tags[0]}</span>
           <span data-testid={`${index}-${tags[1]}-horizontal-tag`}>{tags[1]}</span>
-        </>
+        </Fragment>
       )}
     </div>
   );
