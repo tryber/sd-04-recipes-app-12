@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
-import { Link, useParams, useRouteMatch, useLocation } from 'react-router-dom';
+import {
+  Link, useParams, useRouteMatch, useLocation,
+} from 'react-router-dom';
 import * as fetch from '../../services/recipesAPI';
+import * as LocalStorage from '../../functions/localStorage';
 import CardRecipes from '../../components/CardRecipes';
 import ShareBtn from '../../components/ShareBtn';
 import FavoritesBtn from '../../components/FavoritesBtn';
+import IngredientsList from '../../components/IngredientList';
 import { getType } from '../../functions/type';
 import './Details.css';
 
@@ -16,39 +20,26 @@ const opts = {
   },
 };
 
-const getVideo = ([first]) => (
+const getVideo = ([recipe]) => (
   <div>
     <h2>Video</h2>
-    {first.youtube && (
+    {recipe.youtube && (
       <div data-testid="video">
-        <YouTube videoId={first.youtube.split('=')[1]} opts={opts} />
+        <YouTube videoId={recipe.youtube.split('=')[1]} opts={opts} />
       </div>
     )}
   </div>
 );
 
-const getHeaderRecipe = ([first]) => (
+const getHeaderRecipe = ([recipe]) => (
   <div>
-    <img src={first.image} alt="imagem" data-testid="recipe-photo" />
-    <p data-testid="recipe-title">{first.name}</p>
+    <img src={recipe.image} alt="imagem" data-testid="recipe-photo" />
+    <p data-testid="recipe-title">{recipe.name}</p>
     <p data-testid="recipe-category">
-      {`${first.category} ${first.alcoholicOrNot ? first.alcoholicOrNot : ''}`}
+      {`${recipe.category} ${recipe.alcoholicOrNot ? recipe.alcoholicOrNot : ''}`}
     </p>
-    <ShareBtn testId="" />
-    <FavoritesBtn dataTestId="favorite-btn" recipe={first} />
-  </div>
-);
-
-const getIngredients = ([first]) => (
-  <div>
-    <h1>Ingredients</h1>
-    {first.ingredients.map((ingredient, index) => (
-      <li key={ingredient.name}>
-        <span data-testid={`${index}-ingredient-name-and-measure`}>
-          {`${index}-${ingredient.name}-and-${ingredient.quantity}`}
-        </span>
-      </li>
-    ))}
+    <ShareBtn testId="share-btn" />
+    <FavoritesBtn dataTestId="favorite-btn" recipe={recipe} />
   </div>
 );
 
@@ -59,41 +50,48 @@ const getRecommended = () => (
   </div>
 );
 
-const getInstructions = ([first]) => (
+const getInstructions = ([recipe]) => (
   <div>
     <h2>instructions</h2>
-    <p data-testid="instructions">{first.instructions}</p>
+    <p data-testid="instructions">{recipe.instructions}</p>
   </div>
 );
 
-const getStatusRecipes = (id) => {
-  const DoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'))
-    ? JSON.parse(localStorage.getItem('doneRecipes')).some((recipe) => recipe.id === id)
-    : false;
-  // prettier-ignore
-  const ProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'))
-    ? Object.keys(JSON.parse(localStorage.getItem('inProgressRecipes'))).some(
-      (key) => JSON.parse(localStorage.getItem('inProgressRecipes'))[key][id],
-    ) : false;
-
-  return DoneRecipes ? false : ProgressRecipes ? 'Continuar Receita' : 'Iniciar Receita';
-};
-
 const getButtonStart = (id, pathname) => {
-  const status = getStatusRecipes(id);
+  const status = LocalStorage.getStatusRecipes(id);
   return (
     status && (
-      <Link to={`${pathname}/in-progress`} className="button-start" data-testid="start-recipe-btn">
+      <Link
+        to={`${pathname}/in-progress`}
+        className="button-start"
+        data-testid="start-recipe-btn"
+      >
         {status}
       </Link>
     )
   );
 };
+
+const getButtonFinish = ([recipe], igtsChecked) => (
+  (
+    <Link
+      to="d"
+      disable
+      className="button-start"
+      data-testid="finish-recipe-btn"
+    >
+      Finalizar Receita
+    </Link>
+  )
+);
+
 export default function Details() {
   const [recipesDetails, setRecipesDetails] = useState([]);
-  const { id } = useParams();
+  const [igtsChecked, setIgtsChecked] = useState([]);
+  const { id, status } = useParams();
   const type = getType(useRouteMatch());
   const { pathname } = useLocation();
+
   useEffect(() => {
     async function fetchRecipes() {
       setRecipesDetails([]);
@@ -107,11 +105,18 @@ export default function Details() {
   return recipesDetails.length > 0 ? (
     <div>
       {getHeaderRecipe(recipesDetails)}
-      {getIngredients(recipesDetails)}
+      <IngredientsList
+        recipe={recipesDetails}
+        type={type}
+        igtsChecked={igtsChecked}
+        setIgtsChecked={setIgtsChecked}
+        status={status}
+      />
       {getInstructions(recipesDetails)}
-      {getVideo(recipesDetails)}
-      {getRecommended(type)}
-      {getButtonStart(id, pathname)}
+      {!(status === 'in-progress') && getVideo(recipesDetails)}
+      {!(status === 'in-progress') && getRecommended(type)}
+      {!(status === 'in-progress') ? getButtonStart(id, pathname, type)
+        : getButtonFinish(recipesDetails, igtsChecked)}
     </div>
   ) : (
     <div>loading...</div>

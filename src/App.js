@@ -28,6 +28,16 @@ function App() {
           path="/bebidas/:id"
           render={(props) => <Details props={props} type="cocktail" />}
         />
+        <Route
+          exact
+          path="/bebidas/:id/:status"
+          render={(props) => <Details props={props} type="cocktail" />}
+        />
+        <Route
+          exact
+          path="/comidas/:id/:status"
+          render={(props) => <Details props={props} type="cocktail" />}
+        />
       </Switch>
     </Router>
   );
