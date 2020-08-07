@@ -1,26 +1,23 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { useParams, useRouteMatch } from 'react-router-dom';
-import { getType } from '../functions/type';
+import shareIcon from '../images/shareIcon.svg';
 
-export default function ShareBtn({ dataTestId }) {
+export default function ShareBtn({ dataTestId, id, type }) {
   const [share, setShare] = useState('');
-  const { id } = useParams();
-  const type = getType(useRouteMatch());
+  console.log(type);
   return (
     <div>
       <button
         type="button"
-        data-testid={dataTestId}
         onClick={() => {
           // prettier-ignore
           navigator.clipboard.writeText(
-            `${window.location.origin}/${type === 'meal' ? 'comidas/' : 'bebidas/'}${id}`,
+            `${window.location.origin}/${type === 'Meal' || type === 'comida' ? 'comidas/' : 'bebidas/'}${id}`,
           );
           setShare('Link copiado!');
         }}
       >
-        share
+        <img data-testid={dataTestId} src={shareIcon} alt="share button" />
       </button>
       {share}
     </div>
@@ -29,4 +26,6 @@ export default function ShareBtn({ dataTestId }) {
 
 ShareBtn.propTypes = {
   dataTestId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
