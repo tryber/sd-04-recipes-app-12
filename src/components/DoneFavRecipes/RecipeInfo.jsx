@@ -13,19 +13,23 @@ const RecipeInfo = ({
   const isMeal = type === 'meal' || type === 'comida';
   const onClick = () => history.push(`/${isMeal ? 'comidas' : 'bebidas'}/${id}`);
   return (
-    <div onClick={onClick}>
-      <img
-        src={image}
-        alt="recipe"
-        data-testid={`${index}-horizontal-image`}
-        className="card-image"
-      />
+    <div>
+      <button type="button" onClick={onClick}>
+        <img
+          src={image}
+          alt="recipe"
+          data-testid={`${index}-horizontal-image`}
+          className="card-image"
+        />
+      </button>
       <span data-testid={`${index}-horizontal-top-text`}>
         {isMeal ? `${area} - ${category}` : alcoholicOrNot}
       </span>
-      <span data-testid={`${index}-horizontal-name`}>
-        {name}
-      </span>
+      <button type="button" onClick={onClick}>
+        <span data-testid={`${index}-horizontal-name`}>
+          {name}
+        </span>
+      </button>
       <ShareBtn dataTestId={`${index}-horizontal-share-btn`} id={id} type={type} />
       {isFav && (
       <button type="button" onClick={() => removeFav(id)}>
@@ -33,13 +37,13 @@ const RecipeInfo = ({
       </button>
       )}
       {!isFav && (
-        <Fragment>
+        <>
           <span data-testid={`${index}-horizontal-done-date`}>
             {`Feita em: ${doneDate}`}
           </span>
           <span data-testid={`${index}-${tags[0]}-horizontal-tag`}>{tags[0]}</span>
           <span data-testid={`${index}-${tags[1]}-horizontal-tag`}>{tags[1]}</span>
-        </Fragment>
+        </>
       )}
     </div>
   );
