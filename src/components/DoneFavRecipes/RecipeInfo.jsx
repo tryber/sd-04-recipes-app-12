@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { propTypes } from 'react-bootstrap/esm/Image';
 import ShareBtn from '../ShareBtn';
 import favoriteIcon from '../../images/blackHeartIcon.svg';
 
@@ -14,23 +13,22 @@ const RecipeInfo = ({
   const isMeal = type === 'meal' || type === 'comida';
   const onClick = () => history.push(`/${isMeal ? 'comidas' : 'bebidas'}/${id}`);
   return (
-    <div>
+    <div onClick={onClick}>
       <img
         src={image}
         alt="recipe"
         data-testid={`${index}-horizontal-image`}
-        onClick={onClick}
         className="card-image"
       />
       <span data-testid={`${index}-horizontal-top-text`}>
         {isMeal ? `${area} - ${category}` : alcoholicOrNot}
       </span>
-      <span data-testid={`${index}-horizontal-name`} onClick={onClick}>
+      <span data-testid={`${index}-horizontal-name`}>
         {name}
       </span>
       <ShareBtn dataTestId={`${index}-horizontal-share-btn`} id={id} type={type} />
       {isFav && (
-      <button onClick={() => removeFav(id)}>
+      <button type="button" onClick={() => removeFav(id)}>
         <img data-testid={`${index}-horizontal-favorite-btn`} src={favoriteIcon} alt="favorite" />
       </button>
       )}
