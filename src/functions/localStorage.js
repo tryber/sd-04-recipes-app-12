@@ -35,7 +35,7 @@ export const removeRecipeInProgress = (type, id, name) => {
   ));
 };
 
-export const getStatusRecipes = (id, type) => {
+export const getStatusRecipes = (id) => {
   const DoneRecipes = localStorage.getItem('doneRecipes')
     ? JSON.parse(localStorage.getItem('doneRecipes')).some((recipe) => recipe.id === id)
     : false;
@@ -76,4 +76,27 @@ export const saveRecipeFavorite = (recipe) => {
     image,
   }];
   localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+};
+
+export const saveRecipeDone = (recipe) => {
+  const {
+    id, type, area, category, alcoholicOrNot, name, image, tags,
+  } = recipe;
+  const typeRecipes = { Drink: 'bebida', Meal: 'comida' };
+
+  const favorites = localStorage.getItem('doneRecipes')
+    ? JSON.parse(localStorage.getItem('doneRecipes'))
+    : [];
+  const newFavorites = [...favorites, {
+    id,
+    type: typeRecipes[type],
+    area: area || '',
+    category: category || '',
+    alcoholicOrNot: alcoholicOrNot || '',
+    name,
+    image,
+    doneDate: new Date().toLocaleDateString('pt-BR'),
+    tags,
+  }];
+  localStorage.setItem('doneRecipes', JSON.stringify(newFavorites));
 };
