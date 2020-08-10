@@ -48,7 +48,7 @@ export default function Explore() {
   return (
     <div>
       <Header disableSearch={by !== 'area'} />
-      {renderButtons(type, by)}
+      {renderButtons()}
       <BottomMenu />
     </div>
   );
