@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ShareBtn from '../ShareBtn';
@@ -37,13 +37,17 @@ const RecipeInfo = ({
       </button>
       )}
       {!isFav && (
-        <Fragment>
+        <div>
           <span data-testid={`${index}-horizontal-done-date`}>
             {`Feita em: ${doneDate}`}
           </span>
-          <span data-testid={`${index}-${tags[0]}-horizontal-tag`}>{tags[0]}</span>
-          <span data-testid={`${index}-${tags[1]}-horizontal-tag`}>{tags[1]}</span>
-        </Fragment>
+          {tags && (
+          <div>
+            <span data-testid={`${index}-${tags[0]}-horizontal-tag`}>{tags[0]}</span>
+            <span data-testid={`${index}-${tags[1]}-horizontal-tag`}>{tags[1]}</span>
+          </div>
+          )}
+        </div>
       )}
     </div>
   );
