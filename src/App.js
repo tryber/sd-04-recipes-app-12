@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import {
-  Login, MainRecipes, Details, Profile, DoneFav,
+  Login, MainRecipes, Details, Profile, DoneFav, Explore,
 } from './pages';
 
 function App() {
@@ -43,6 +43,9 @@ function App() {
           path="/comidas/:id/:status"
           render={(props) => <Details props={props} type="cocktail" />}
         />
+        <Route exact path="/explorar" component={Explore} />
+        <Route exact path="/explorar/:type" component={Explore} />
+        <Route exact path="/explorar/:type/:by" component={Explore} />
       </Switch>
     </Router>
   );

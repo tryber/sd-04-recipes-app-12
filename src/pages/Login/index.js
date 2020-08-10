@@ -23,7 +23,7 @@ const saveTokens = () => {
 const saveEmail = (email) => localStorage.setItem('user', JSON.stringify({ email }));
 
 const submitButton = (email, password) => (
-  <Link to="/comidas">
+  <Link to={{ pathname: '/comidas', state: { datatest: 'recipe', qtd: 12 } }}>
     <button
       type="button"
       disabled={!(checkEmail(email) && checkPassword(password))}

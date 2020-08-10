@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useRecipes } from '../contexts/RecipesContext';
 import { getTypeInverted, getType } from '../functions/type';
 import * as fetch from '../services/recipesAPI';
 
-const CardRecipes = ({ datatest, qtd }) => {
-  const { recipes, loading, setRecipes, setLoading } = useRecipes();
+const CardRecipes = () => {
+  const {
+    recipes, loading, setRecipes, setLoading,
+  } = useRecipes();
+  const { state: { datatest, qtd } } = useLocation();
   const typeInverted = getTypeInverted(datatest, useRouteMatch());
   const type = getType(useRouteMatch());
   useEffect(() => {
@@ -25,7 +28,7 @@ const CardRecipes = ({ datatest, qtd }) => {
       {recipes.map((recipe, index) => (
         <Link
           key={recipe.id}
-          to={`${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`}
+          to={{ pathname: `${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`, state: { datatest: 'recomendation', qtd: 6 } }}
         >
           <div data-testid={`${index}-${datatest}-card`} className="card">
             <img

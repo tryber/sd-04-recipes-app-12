@@ -23,15 +23,17 @@ export default function Details() {
     fetchRecipes();
   }, [type]);
 
-  if (status === 'in-progress') {
-    LocalStorage.saveRecipeInProgress(id, type);
+  function validateStatus() {
+    if (status === 'in-progress') {
+      LocalStorage.saveRecipeInProgress(id, type);
+      return <DetailInProgress recipe={recipesDetails} status={status} />;
+    }
+    return <Detail recipe={recipesDetails} status={status} />;
   }
 
   return recipesDetails.length > 0 ? (
     <div>
-      {status === 'in-progress'
-        ? <DetailInProgress recipe={recipesDetails} status={status} />
-        : <Detail recipe={recipesDetails} status={status} />}
+      {validateStatus()}
     </div>
   ) : (
     <div>loading...</div>

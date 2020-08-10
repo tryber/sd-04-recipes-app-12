@@ -69,10 +69,10 @@ export const getVideo = ([recipe]) => (
   </div>
 );
 
-export const getRecommended = (datatest, qtd) => (
+export const getRecommended = () => (
   <div className="recommended-recipes">
     <h4>Recomendadas</h4>
-    <CardRecipes datatest={datatest} qtd={qtd} />
+    <CardRecipes />
   </div>
 );
 
