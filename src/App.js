@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import {
-  Login, MainRecipes, Details, Profile, DoneFav,
+  Login, MainRecipes, Details, Profile, DoneFav, Explore,
 } from './pages';
 
 function App() {
@@ -13,36 +13,15 @@ function App() {
         <Route path="/perfil" component={Profile} />
         <Route path="/receitas-feitas" component={DoneFav} />
         <Route path="/receitas-favoritas" component={DoneFav} />
-        <Route
-          exact
-          path="/comidas"
-          render={(props) => <MainRecipes props={props} type="meal" />}
-        />
-        <Route
-          exact
-          path="/bebidas"
-          render={(props) => <MainRecipes props={props} type="cocktail" />}
-        />
-        <Route
-          exact
-          path="/comidas/:id"
-          render={(props) => <Details props={props} type="meal" />}
-        />
-        <Route
-          exact
-          path="/bebidas/:id"
-          render={(props) => <Details props={props} type="cocktail" />}
-        />
-        <Route
-          exact
-          path="/bebidas/:id/:status"
-          render={(props) => <Details props={props} type="cocktail" />}
-        />
-        <Route
-          exact
-          path="/comidas/:id/:status"
-          render={(props) => <Details props={props} type="cocktail" />}
-        />
+        <Route exact path="/comidas" component={MainRecipes} />
+        <Route exact path="/bebidas" component={MainRecipes} />
+        <Route exact path="/comidas/:id" component={Details} />
+        <Route exact path="/bebidas/:id" component={Details} />
+        <Route exact path="/bebidas/:id/:status" component={Details} />
+        <Route exact path="/comidas/:id/:status" component={Details} />
+        <Route exact path="/explorar" component={Explore} />
+        <Route exact path="/explorar/:type" component={Explore} />
+        <Route exact path="/explorar/:type/:by" component={Explore} />
       </Switch>
     </Router>
   );
