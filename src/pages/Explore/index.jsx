@@ -3,8 +3,8 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import BottomMenu from '../../components/BottomMenu';
 import { getRandomRecipe } from '../../services/recipesAPI';
-// import Area from '../../components/ExploreArea';
-// import Ingredients from '../../components/ExploreIngredients';
+import Area from '../../components/ExploreArea';
+import Ingredients from '../../components/ExploreIngredients';
 
 const initialExplore = () => (
   <div>
@@ -21,15 +21,15 @@ export default function Explore() {
   const { type, by } = useParams();
   const history = useHistory();
   const surpriseMe = () => getRandomRecipe(type === 'comidas' ? 'meal' : 'cocktail').then((data) => {
-    history.push(`${type}/${data[0].id}`);
+    history.push(`/${type}/${data[0].id}`);
   });
   const exploreOptions = () => (
     <div>
-      <Link to={`explorar/${type}/ingredientes`}>
+      <Link to={`/explorar/${type}/ingredientes`}>
         Por Ingredientes
       </Link>
       {type === 'comidas' && (
-      <Link to={`explorar/${type}/area`}>
+      <Link to={`/explorar/${type}/area`}>
         Por Local de Origem
       </Link>
       )}
@@ -40,8 +40,8 @@ export default function Explore() {
   );
   const renderButtons = () => {
     if (!type && !by) return initialExplore();
-    // if (by === 'area') return <Area />;
-    // if (by === 'ingredientes') return <Ingredients />;
+    if (by === 'area') return <Area />;
+    if (by === 'ingredientes') return <Ingredients />;
     return exploreOptions();
   };
 
