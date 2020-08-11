@@ -17,6 +17,7 @@ const Categories = () => {
   }, [type]);
 
   useEffect(() => {
+    console.log('felipe');
     setLoading(true);
     const fetchRecipes = filter
       ? fetch.searchRecipesByCategory(filter, type)
@@ -25,7 +26,7 @@ const Categories = () => {
       setRecipes(data);
       setLoading(false);
     });
-  }, [filter, setRecipes, setLoading, type]);
+  }, [filter]);
   // prettier-ignore
   const handleClick = (category) => ((category === 'All' || category === filter)
     ? setFilter('') : setFilter(category));

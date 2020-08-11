@@ -42,6 +42,7 @@ export const disruptRecipe = (recipe, type) => {
 };
 
 export const convertRecipes = (recipes, quantity = 12) => {
+  console.log('ssasas', recipes);
   const data = recipes.meals || recipes.drinks || [];
   const type = recipes.meals ? 'Meal' : 'Drink';
 

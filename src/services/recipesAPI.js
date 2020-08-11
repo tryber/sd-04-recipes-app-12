@@ -5,7 +5,10 @@ const fetchURL = (type, path) => fetch(`https://www.the${type}db.com/api/json/v1
     .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json))));
 
 const fetchConvert = (type, path, quantity) => fetchURL(type, path)
-  .then((json) => convertRecipes(json, quantity));
+  .then((json) => {
+    console.log('jss', json);
+    return convertRecipes(json, quantity);
+  });
 
 export const getRecipeCategories = (type) => fetchURL(type, 'list.php?c=list');
 
@@ -25,4 +28,7 @@ const searchByHelper = {
   'first-letter': 'search.php?f=',
 };
 
-export const searchBy = (search, info, type, quantity) => fetchConvert(type, `${searchByHelper[search]}${info}`, quantity);
+export const searchBy = (search, info, type, quantity) => {
+  console.log('search', search);
+  return fetchConvert(type, `${searchByHelper[search]}${info}`, quantity);
+};

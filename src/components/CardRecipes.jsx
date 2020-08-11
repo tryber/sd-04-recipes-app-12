@@ -9,26 +9,39 @@ const CardRecipes = () => {
   const {
     recipes, loading, setRecipes, setLoading,
   } = useRecipes();
-  const { state: { datatest, qtd } } = useLocation();
+  const {
+    state: {
+      datatest, qtd, by, info,
+    },
+  } = useLocation();
   const typeInverted = getTypeInverted(datatest, useRouteMatch());
   const type = getType(useRouteMatch());
   useEffect(() => {
     async function fetchRecipes() {
+      console.log('ddd', by);
       setLoading(true);
-      fetch.searchBy('name', '', typeInverted, qtd).then((data) => {
+      fetch.searchBy(by, info, typeInverted, qtd).then((data) => {
+        console.log('yyyy', data);
         setRecipes(data);
         setLoading(false);
       });
     }
     fetchRecipes();
   }, [type]);
-
+  console.log(by);
+  console.log(recipes);
+  console.log(loading);
   return !loading ? (
     <div>
       {recipes.map((recipe, index) => (
         <Link
           key={recipe.id}
-          to={{ pathname: `${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`, state: { datatest: 'recomendation', qtd: 6 } }}
+          to={{
+            pathname: `${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`,
+            state: {
+              datatest: 'recomendation', qtd: 6, by: 'name', info: '',
+            },
+          }}
         >
           <div data-testid={`${index}-${datatest}-card`} className="card">
             <img
