@@ -7,5 +7,6 @@
   "screenshotOnRunFailure": false,
   "viewportWidth": 360,
   "viewportHeight": 640,
-  "defaultCommandTimeout": 10000
+  "defaultCommandTimeout": 10000,
+  "numTestsKeptInMemory":500
 }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import SearchBar from './SearchBar';
@@ -11,10 +12,10 @@ const capitalizeURL = (URL) => {
   const phrase = URL.split(/\/|-/);
   phrase.shift();
   if (phrase.length > 2) phrase.splice(1, 1);
-  return phrase.map((word) => capitalize(word)).join(' ');
+  return phrase.map((word) => capitalize(word === 'area' ? 'origem' : word)).join(' ');
 };
 
-const Header = () => {
+const Header = ({ showButton }) => {
   const type = getType(useRouteMatch());
   const [showSearch, setShowSearch] = useState(false);
   const title = capitalizeURL(useRouteMatch().url);
@@ -25,7 +26,7 @@ const Header = () => {
       </Link>
       <span data-testid="page-title">{title}</span>
       {
-        (type && (!title.includes('Explorar')) && !title.includes('Perfil')) && (
+        showButton && (
           <button type="button" onClick={() => setShowSearch(!showSearch)}>
             <img data-testid="search-top-btn" alt="icon" src={searchIcon} />
           </button>
@@ -34,6 +35,14 @@ const Header = () => {
       {showSearch && <SearchBar type={type} />}
     </div>
   );
+};
+
+Header.propTypes = {
+  showButton: PropTypes.bool,
+};
+
+Header.defaultsProps = {
+  showButton: false,
 };
 
 export default Header;
