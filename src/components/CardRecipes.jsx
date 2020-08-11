@@ -5,32 +5,33 @@ import { useRecipes } from '../contexts/RecipesContext';
 import { getTypeInverted, getType } from '../functions/type';
 import * as fetch from '../services/recipesAPI';
 
-const CardRecipes = () => {
+const CardRecipes = ({ datatest2, qtd2 }) => {
   const {
     recipes, loading, setRecipes, setLoading,
   } = useRecipes();
+  const { state } = useLocation();
   const {
-    state: {
-      datatest, qtd, by, info,
-    },
-  } = useLocation();
+    by, info, datatest, qtd,
+  } = state || {
+    datatest: datatest2, qtd: qtd2, by: 'name', info: '',
+  };
+
   const typeInverted = getTypeInverted(datatest, useRouteMatch());
   const type = getType(useRouteMatch());
+
   useEffect(() => {
+    console.log(by);
+    console.log(info);
     async function fetchRecipes() {
-      console.log('ddd', by);
       setLoading(true);
       fetch.searchBy(by, info, typeInverted, qtd).then((data) => {
-        console.log('yyyy', data);
         setRecipes(data);
         setLoading(false);
       });
     }
     fetchRecipes();
-  }, [type]);
-  console.log(by);
-  console.log(recipes);
-  console.log(loading);
+  }, [type, state]);
+
   return !loading ? (
     <div>
       {recipes.map((recipe, index) => (
@@ -71,8 +72,8 @@ const CardRecipes = () => {
 };
 
 CardRecipes.propTypes = {
-  datatest: PropTypes.string.isRequired,
-  qtd: PropTypes.number.isRequired,
+  datatest2: PropTypes.string.isRequired,
+  qtd2: PropTypes.number.isRequired,
 };
 
 export default CardRecipes;

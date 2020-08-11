@@ -1,40 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as fetch from '../services/recipesAPI';
 import { useRecipes } from '../contexts/RecipesContext';
-import CardCategories from './CardCategory';
-import { getType } from '../functions/type';
+import CardRecipes from './CardRecipes';
+import Footer from './BottomMenu';
+import NotFound from './NotFound';
 
-const Categories = () => {
-  const type = getType(useRouteMatch());
-  const [categories, setCategories] = useState([]);
-  const [filter, setFilter] = useState('');
-  const { setRecipes, setLoading } = useRecipes();
-  // prettier-ignore
+const ExploreFoodsArea = () => {
+  const [areas, setAreas] = useState([]);
+  const { type } = useParams();
+  const { setRecipes } = useRecipes();
   useEffect(() => {
-    fetch.getRecipeCategories(type)
-      .then((data) => setCategories((data.drinks || data.meals).slice(0, 5)));
-  }, [type]);
+    fetch.getRecipeAreas('meal')
+      .then((data) => setAreas(data.meals));
+  }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchRecipes = filter
-      ? fetch.searchRecipesByCategory(filter, type)
-      : fetch.searchBy('name', '', type);
-    fetchRecipes.then((data) => {
-      setRecipes(data);
-      setLoading(false);
-    });
-  }, [filter, setRecipes, setLoading, type]);
-  // prettier-ignore
-  const handleClick = (category) => ((category === 'All' || category === filter)
-    ? setFilter('') : setFilter(category));
+  const handleSelect = (value) => {
+    if (value === 'All') {
+      fetch.searchBy('name', '', 'meal', 12)
+        .then((data) => setRecipes(data));
+    } else {
+      fetch.searchBy('area', value, 'meal', 12)
+        .then((data) => setRecipes(data));
+    }
+  };
 
-  return categories.length > 0 ? (
-    <CardCategories handleClick={handleClick} categories={categories} />
+  return type === 'comidas' ? (
+    <div style={{ marginTop: '70px' }}>
+      <select
+        className="area-select blue-text"
+        data-testid="explore-by-area-dropdown"
+        onChange={(e) => handleSelect(e.target.value)}
+      >
+        <option data-testid="All-option">All</option>
+        {areas.map((e) => <option data-testid={`${e.strArea}-option`}>{e.strArea}</option>)}
+      </select>
+      <CardRecipes datatest2="recipe" />
+      <Footer />
+    </div>
   ) : (
-    <p>loading...</p>
+    <NotFound />
   );
 };
 
-export default Categories;
+export default ExploreFoodsArea;

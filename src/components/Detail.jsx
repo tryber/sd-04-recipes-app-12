@@ -11,7 +11,7 @@ export default function Detail({ recipe, status }) {
       {Part.getIngredientsList(status, recipe, null, null)}
       {Part.getInstructions(recipe)}
       {Part.getVideo(recipe)}
-      {Part.getRecommended()}
+      {Part.getRecommended('recomendation', 6)}
       {Part.getButtonStart(recipe[0].id, pathname)}
     </div>
   );

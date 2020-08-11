@@ -22,12 +22,13 @@ const ExploreIngredient = () => {
           const name = ingredient.strIngredient || ingredient.strIngredient1;
           return (
             <div>
-              <Link to={{
-                pathname: `${type === 'meal' ? '/comidas/' : '/bebidas/'}`,
-                state: {
-                  datatest: 'recipe', qtd: 12, by: 'ingredient', info: name,
-                },
-              }}
+              <Link
+                to={{
+                  pathname: `${type === 'meal' ? '/comidas/' : '/bebidas/'}`,
+                  state: {
+                    datatest: 'recipe', qtd: 12, by: 'ingredient', info: name,
+                  },
+                }}
               >
                 <button
                   type="button"

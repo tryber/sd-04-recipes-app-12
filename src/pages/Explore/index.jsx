@@ -8,10 +8,10 @@ import Ingredients from '../../components/ExploreIngredient';
 
 const initialExplore = () => (
   <div>
-    <Link to="/explorar/comidas" data-testid="finish-recipe-btn">
+    <Link to="/explorar/comidas" data-testid="explore-food">
       Explorar Comidas
     </Link>
-    <Link to="/explorar/bebidas" data-testid="finish-recipe-btn">
+    <Link to="/explorar/bebidas" data-testid="explore-drinks">
       Explorar Bebidas
     </Link>
   </div>
@@ -38,7 +38,7 @@ export default function Explore() {
         Por Local de Origem
       </Link>
       )}
-      <button type="button" onClick={surpriseMe}>
+      <button type="button" onClick={surpriseMe} data-testid="explore-surprise">
         Me Surpreenda!
       </button>
     </div>
