@@ -23,6 +23,8 @@ const searchByHelper = {
   name: 'search.php?s=',
   ingredient: 'filter.php?i=',
   'first-letter': 'search.php?f=',
+  category: 'filter.php?c=',
+  area: 'filter.php?a=',
 };
 
 export const searchBy = (search, info, type, quantity) => fetchConvert(type, `${searchByHelper[search]}${info}`, quantity);

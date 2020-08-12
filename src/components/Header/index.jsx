@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
@@ -15,10 +16,10 @@ const capitalizeURL = (URL) => {
   const phrase = URL.split(/\/|-/);
   phrase.shift();
   if (phrase.length > 2) phrase.splice(1, 1);
-  return phrase.map((word) => capitalize(word)).join(' ');
+  return phrase.map((word) => capitalize(word === 'area' ? 'origem' : word)).join(' ');
 };
 
-const Header = () => {
+const Header = ({ showButton }) => {
   const type = getType(useRouteMatch());
   const [showSearch, setShowSearch] = useState(false);
   const title = capitalizeURL(useRouteMatch().url);
@@ -41,9 +42,9 @@ const Header = () => {
       <Col>
       <div className="header-col">
       {
-        type && (
+        showButton && (
           <button type="button" onClick={() => setShowSearch(!showSearch)}>
-            <img data-testid="search-top-btn" src={searchIcon} alt="search icon" />
+            <img data-testid="search-top-btn" alt="icon" src={searchIcon} />
           </button>
         )
       }
@@ -54,6 +55,14 @@ const Header = () => {
     </Row>
     </Container>
   );
+};
+
+Header.propTypes = {
+  showButton: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  showButton: false,
 };
 
 export default Header;
