@@ -1,31 +1,48 @@
 import React, { useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useRecipes } from '../contexts/RecipesContext';
 import { getTypeInverted, getType } from '../functions/type';
 import * as fetch from '../services/recipesAPI';
 
-const CardRecipes = ({ datatest, qtd }) => {
-  const { recipes, loading, setRecipes, setLoading } = useRecipes();
+const CardRecipes = ({ datatest2, qtd2 }) => {
+  const {
+    recipes, loading, setRecipes, setLoading,
+  } = useRecipes();
+  const { state } = useLocation();
+  const {
+    by, info, datatest, qtd,
+  } = state || {
+    datatest: datatest2, qtd: qtd2, by: 'name', info: '',
+  };
+
   const typeInverted = getTypeInverted(datatest, useRouteMatch());
   const type = getType(useRouteMatch());
+
   useEffect(() => {
+    console.log(by);
+    console.log(info);
     async function fetchRecipes() {
       setLoading(true);
-      fetch.searchBy('name', '', typeInverted, qtd).then((data) => {
+      fetch.searchBy(by, info, typeInverted, qtd).then((data) => {
         setRecipes(data);
         setLoading(false);
       });
     }
     fetchRecipes();
-  }, [type]);
+  }, [type, state]);
 
   return !loading ? (
     <div>
       {recipes.map((recipe, index) => (
         <Link
           key={recipe.id}
-          to={`${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`}
+          to={{
+            pathname: `${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`,
+            state: {
+              datatest: 'recomendation', qtd: 6, by: 'name', info: '',
+            },
+          }}
         >
           <div data-testid={`${index}-${datatest}-card`} className="card">
             <img
@@ -55,8 +72,8 @@ const CardRecipes = ({ datatest, qtd }) => {
 };
 
 CardRecipes.propTypes = {
-  datatest: PropTypes.string.isRequired,
-  qtd: PropTypes.number.isRequired,
+  datatest2: PropTypes.string.isRequired,
+  qtd2: PropTypes.number.isRequired,
 };
 
 export default CardRecipes;

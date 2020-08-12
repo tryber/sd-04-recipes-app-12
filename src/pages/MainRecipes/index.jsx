@@ -7,9 +7,9 @@ import BottomMenu from '../../components/BottomMenu';
 export default function MainRecipes() {
   return (
     <div>
-      <Header />
+      <Header showButton />
       <Categories />
-      <CardRecipes datatest="recipe" qtd={12} />
+      <CardRecipes datatest2="recipe" qtd2={12} />
       <BottomMenu />
     </div>
   );
