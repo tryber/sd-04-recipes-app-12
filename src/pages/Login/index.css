@@ -1,1 +1,10 @@
-/* opa */
+div.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-submit-btn {
+  margin-top: 2rem;
+}

@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
 
 const CardCategory = ({ handleClick, categories }) => (
   <div>
-    <button
+    <Button
       type="button"
       data-testid="All-category-filter"
       onClick={(e) => handleClick(e.target.innerHTML)}
     >
       All
-    </button>
+    </Button>
     {categories.map((category) => (
-      <button
+      <Button
         key={category.strCategory}
         data-testid={`${category.strCategory}-category-filter`}
         type="button"
         onClick={(e) => handleClick(e.target.innerHTML)}
       >
         {category.strCategory}
-      </button>
+      </Button>
     ))}
   </div>
 );

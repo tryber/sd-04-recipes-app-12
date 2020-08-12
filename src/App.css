@@ -7,3 +7,7 @@
   position: fixed;
   width: 100%;
 }
+
+body {
+  background-image: linear-gradient(to right, grey , white);
+}

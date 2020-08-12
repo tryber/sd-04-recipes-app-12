@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import './index.css';
+
 
 const checkEmail = (email) => email.match(/\S+@\S+\.\S+/i);
 
@@ -28,6 +32,7 @@ const submitButton = (email, password) => (
       type="button"
       disabled={!(checkEmail(email) && checkPassword(password))}
       data-testid="login-submit-btn"
+      className="login-submit-btn"
       onClick={() => {
         saveTokens();
         saveEmail(email);
@@ -43,11 +48,18 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   return (
-    <div>
-      {loginInput(email, setEmail, 'email')}
-      {loginInput(password, setPassword, 'password')}
-      {submitButton(email, password)}
-    </div>
+    <Container>
+      <Jumbotron>
+        <div className="login">
+          <h1>App Receitas</h1>
+          <label>E-mail:</label>
+          {loginInput(email, setEmail, 'email')}
+          <label>Password:</label>
+          {loginInput(password, setPassword, 'password')}
+          {submitButton(email, password)}
+        </div>
+      </Jumbotron>
+    </Container>
   );
 };
 
