@@ -1,0 +1,20 @@
+
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to left, grey, white);
+}
+
+.header-col {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.categories {
+  margin: 10% 0;
+}

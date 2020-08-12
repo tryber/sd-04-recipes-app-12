@@ -1,4 +1,5 @@
 import React from 'react';
+import Jumbotron from 'react-bootstrap/esm/Jumbotron';
 import CardRecipes from '../../components/CardRecipes';
 import Categories from '../../components/Categories';
 import Header from '../../components/Header';
@@ -9,9 +10,11 @@ export default function MainRecipes() {
   return (
     <div className="main">
       <Header />
-      <Categories />
+      <Jumbotron className="categories">
+        <Categories />
+      </Jumbotron>
       <CardRecipes datatest="recipe" qtd={12} />
       <BottomMenu />
-    </div>
+      </div>
   );
 }

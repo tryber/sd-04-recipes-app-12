@@ -27,40 +27,37 @@ const CardRecipes = ({ datatest, qtd }) => {
   return !loading ? (
     <div>
       {recipes.map((recipe, index) => (
-        <Card style={{ width: '18rem' }}>
-          <Card.Body>
-        
-<Link
-  key={recipe.id}
-  to={`${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`}
-  >
-        <div data-testid={`${index}-${datatest}-card`} className="card">
-          <Card.Title>
-    <h1 data-testid={
-      `
-      ${index}-${datatest === 'recipe' ?
-       'card' : datatest}-${datatest === 'recipe' ?
-        'name' : 'title'}`}>
-      {recipe.name}
-      </h1>
-      </Card.Title>
-          <Card.Img
-            variant="top"
-            src={recipe.image}
-            alt="imagem"
-            data-testid={`${index}-card-img`}
-            className="card-image"
-            ></Card.Img>
-<Card.Text>
-              <p data-testid="recipe-category">
-              {`${recipe.category ? recipe.category : ''}
-            ${recipe.alcoholicOrNot ? recipe.alcoholicOrNot : ''}`}
-            </p>
-            </Card.Text> 
-         </div>
-                  </Link>
-        </Card.Body>
-              </Card>
+        <Link
+          key={recipe.id}
+          to={`${typeInverted === 'meal' ? '/comidas/' : '/bebidas/'}${recipe.id}`}
+        >
+          <div data-testid={`${index}-${datatest}-card`} className="card">
+            <Card style={{ width: '18rem' }}>
+              <Card.Body>
+                <Card.Title
+                  data-testid={`${index}-${datatest === 'recipe' ? 'card' : datatest}-${
+                    datatest === 'recipe' ? 'name' : 'title'
+                  }`}
+                >
+                  {recipe.name}
+                </Card.Title>
+                <Card.Img
+                  variant="top"
+                  src={recipe.image}
+                  alt="imagem"
+                  data-testid={`${index}-card-img`}
+                  className="card-image"
+                />
+                <Card.Text>
+                  <p data-testid="recipe-category">
+                    {`${recipe.category ? recipe.category : ''}
+                    ${recipe.alcoholicOrNot ? recipe.alcoholicOrNot : ''}`}
+                  </p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </Link>
       ))}
     </div>
   ) : (

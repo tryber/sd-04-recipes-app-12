@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { drinkIcon, exploreIcon, mealIcon } from '../images';
-import Jumbotron from 'react-bootstrap/esm/Jumbotron';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import './CSS/BottomMenu.css';
 
 const BottomMenu = () => (
