@@ -41,7 +41,7 @@ Header.propTypes = {
   showButton: PropTypes.bool,
 };
 
-Header.defaultsProps = {
+Header.defaultProps = {
   showButton: false,
 };
 

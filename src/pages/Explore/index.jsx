@@ -17,43 +17,46 @@ const initialExplore = () => (
   </div>
 );
 
+const surpriseMe = (type, history) => getRandomRecipe(type === 'comidas' ? 'meal' : 'cocktail').then((data) => {
+  history.push({
+    pathname: `/${type}/${data[0].id}`,
+    state: {
+      datatest: 'recomendation', qtd: 6, by: 'name', info: '',
+    },
+  });
+});
+
+const exploreOptions = (type, history) => (
+  <div>
+    <Link to={`/explorar/${type}/ingredientes`} data-testid="explore-by-ingredient">
+      Por Ingredientes
+    </Link>
+    {type === 'comidas' && (
+    <Link to={`/explorar/${type}/area`} data-testid="explore-by-area">
+      Por Local de Origem
+    </Link>
+    )}
+    <button type="button" onClick={() => surpriseMe(type, history)} data-testid="explore-surprise">
+      Me Surpreenda!
+    </button>
+  </div>
+);
+
+const renderButtons = (type, by, history) => {
+  if (!type && !by) return initialExplore();
+  if (by === 'area') return <Area />;
+  if (by === 'ingredientes') return <Ingredients />;
+  return exploreOptions(type, history);
+};
+
 export default function Explore() {
   const { type, by } = useParams();
   const history = useHistory();
-  const surpriseMe = () => getRandomRecipe(type === 'comidas' ? 'meal' : 'cocktail').then((data) => {
-    history.push({
-      pathname: `/${type}/${data[0].id}`,
-      state: {
-        datatest: 'recomendation', qtd: 6, by: 'name', info: '',
-      },
-    });
-  });
-  const exploreOptions = () => (
-    <div>
-      <Link to={`/explorar/${type}/ingredientes`} data-testid="explore-by-ingredient">
-        Por Ingredientes
-      </Link>
-      {type === 'comidas' && (
-      <Link to={`/explorar/${type}/area`} data-testid="explore-by-area">
-        Por Local de Origem
-      </Link>
-      )}
-      <button type="button" onClick={surpriseMe} data-testid="explore-surprise">
-        Me Surpreenda!
-      </button>
-    </div>
-  );
-  const renderButtons = () => {
-    if (!type && !by) return initialExplore();
-    if (by === 'area') return <Area />;
-    if (by === 'ingredientes') return <Ingredients />;
-    return exploreOptions();
-  };
 
   return (
     <div>
-      <Header showButton={by !== 'area'} />
-      {renderButtons()}
+      <Header showButton={by === 'area'} />
+      {renderButtons(type, by, history)}
       <BottomMenu />
     </div>
   );
